@@ -1,8 +1,9 @@
 #pragma once
+#include "common.h"
 
 struct sproto;
 class SprotoMessage;
-class CppSproto
+class DLLEXPORT CppSproto
 {
 public:
 	CppSproto();

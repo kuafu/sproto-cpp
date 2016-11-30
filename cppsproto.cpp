@@ -163,7 +163,7 @@ CppSproto::CppSproto()
 
 CppSproto::~CppSproto()
 {
-	if (sp_)
+	if(sp_)
 	{
 		sproto_release(sp_);
 		sp_ = NULL;

@@ -2,8 +2,9 @@
 
 #include <stdint.h>
 #include <string>
+#include "common.h"
 
-class SprotoMessage
+class DLLEXPORT SprotoMessage
 {
 public:
 	virtual ~SprotoMessage() {}
