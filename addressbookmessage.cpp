@@ -12,14 +12,13 @@ PhoneNumberMessage::~PhoneNumberMessage()
 {
 }
 
-std::string PhoneNumberMessage::GetMessageName()
+string PhoneNumberMessage::GetMessageName()
 {
 	static const char* PhoneNumberMessageName = "PhoneNumber";
 	return PhoneNumberMessageName;
 }
 
-bool PhoneNumberMessage::GetIntegerField(const char* name, int index, 
-		int64_t& value)
+bool PhoneNumberMessage::GetIntegerField(const char* name, int index, int64_t& value)
 {
 	if (strcmp(name, "type") == 0)
 	{
@@ -81,22 +80,23 @@ bool PhoneNumberMessage::SetStringField(const char* name, int index, const char*
 
 void PhoneNumberMessage::Dump()
 {
-	std::cout << "\t\tnumber: " << number_ << std::endl;
-	std::cout << "\t\ttype: ";
+	cout << "\t\tnumber: " << number_ << endl;
+	cout << "\t\ttype: ";
 	switch (type_)
 	{
 		case 1:
-			std::cout << "telephone" << std::endl;
+			cout << "telephone" << endl;
 			break;
 		case 2:
-			std::cout << "mobile phone" << std::endl;
+			cout << "mobile phone" << endl;
 			break;
 		default:
-			std::cout << "unknown" << std::endl;
+			cout << "unknown" << endl;
 			break;
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
 // PersonMessage
 PersonMessage::PersonMessage()
 	: id_(0)
@@ -105,7 +105,7 @@ PersonMessage::PersonMessage()
 
 PersonMessage::~PersonMessage()
 {
-	for (PhoneNumberVector::iterator it = phonenumbers_.begin();
+	for (PhoneNumbersArray::iterator it = phonenumbers_.begin();
 			it != phonenumbers_.end(); ++it)
 	{
 		PhoneNumberMessage* phonenumber = *it;
@@ -113,7 +113,7 @@ PersonMessage::~PersonMessage()
 	}
 }
 
-std::string PersonMessage::GetMessageName()
+string PersonMessage::GetMessageName()
 {
 	static const char* PersonMessageName = "Person";
 	return PersonMessageName;
@@ -132,8 +132,7 @@ bool PersonMessage::GetIntegerField(const char* name, int index, int64_t& value)
 	}
 }
 
-bool PersonMessage::SetIntegerField(const char* name, int index, 
-		int64_t value)
+bool PersonMessage::SetIntegerField(const char* name, int index, int64_t value)
 {
 	if (strcmp(name, "id") == 0)
 	{
@@ -223,11 +222,11 @@ SMessage* PersonMessage::SetStructField(const char* name, int index)
 
 void PersonMessage::Dump()
 {
-	std::cout << "\tid: " << id_ << std::endl;
-	std::cout << "\tname: " << name_ << std::endl;
-	std::cout << "\temail: " << email_ << std::endl;
+	cout << "\tid: " << id_ << endl;
+	cout << "\tname: " << name_ << endl;
+	cout << "\temail: " << email_ << endl;
 
-	for (PhoneNumberVector::iterator it = phonenumbers_.begin();
+	for (PhoneNumbersArray::iterator it = phonenumbers_.begin();
 			it != phonenumbers_.end(); ++it)
 	{
 		PhoneNumberMessage* phonenumber = *it;
@@ -235,12 +234,14 @@ void PersonMessage::Dump()
 	}
 }
 
+
+//////////////////////////////////////////////////////////////////////////
 // AddressBookMessage
-AddressBookMessage::AddressBookMessage()
+AddressBook::AddressBook()
 {
 }
 
-AddressBookMessage::~AddressBookMessage()
+AddressBook::~AddressBook()
 {
 	for (PersonVector::iterator it = persons_.begin(); it != persons_.end(); ++it)
 	{
@@ -249,13 +250,13 @@ AddressBookMessage::~AddressBookMessage()
 	}
 }
 
-std::string AddressBookMessage::GetMessageName()
+string AddressBook::GetMessageName()
 {
 	static const char* AddressBookMessageName = "AddressBook";
 	return AddressBookMessageName;
 }
 
-SMessage* AddressBookMessage::GetStructField(const char* name,
+SMessage* AddressBook::GetStructField(const char* name,
 		int index)
 {
 	if (strcmp(name, "persons") == 0) 
@@ -267,7 +268,7 @@ SMessage* AddressBookMessage::GetStructField(const char* name,
 	return NULL;
 }
 
-SMessage* AddressBookMessage::SetStructField(const char* name,
+SMessage* AddressBook::SetStructField(const char* name,
 		int index)
 {
 	if (strcmp(name, "persons") == 0)
@@ -280,15 +281,15 @@ SMessage* AddressBookMessage::SetStructField(const char* name,
 	return NULL;
 }
 
-void AddressBookMessage::Dump()
+void AddressBook::Dump()
 {
-	std::cout << "{" << std::endl;
+	cout << "{" << endl;
 	for (PersonVector::iterator it = persons_.begin();
 			it != persons_.end(); ++it)
 	{
 		PersonMessage* person = *it;
 		person->Dump();
 	}
-	std::cout << "}" << std::endl;
+	cout << "}" << endl;
 }
 

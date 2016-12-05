@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "SMessage.h"
+using namespace std;
 
 class PhoneNumberMessage : public SMessage
 {
@@ -10,18 +11,18 @@ public:
 	PhoneNumberMessage();
 	virtual ~PhoneNumberMessage();
 
-	virtual std::string GetMessageName();
+	virtual string GetMessageName();
 	virtual bool GetIntegerField(const char* name, int index, int64_t& value);
 	virtual bool SetIntegerField(const char* name, int index, int64_t value);
 	virtual const char* GetStringField(const char* name, int index, int& len);
 	virtual bool SetStringField(const char* name, int index, const char* value, int len);
 
-	void SetNumber(const std::string& number) { number_ = number; }
+	void SetNumber(const string& number) { number_ = number; }
 	void SetType(int type) { type_ = type; }
 	void Dump();
 
 private:
-	std::string number_;
+	string number_;
 	int type_;
 };
 
@@ -31,7 +32,7 @@ public:
 	PersonMessage();
 	virtual ~PersonMessage();
 
-	virtual std::string GetMessageName();
+	virtual string GetMessageName();
 	virtual bool GetIntegerField(const char* name, int index, int64_t& value);
 	virtual bool SetIntegerField(const char* name, int index, int64_t value);
 	virtual const char* GetStringField(const char* name, int index, int& len);
@@ -40,29 +41,29 @@ public:
 	virtual SMessage* GetStructField(const char* name, int index);
 	virtual SMessage* SetStructField(const char* name, int index);
 
-	void SetName(const std::string& name) { name_ = name; }
+	void SetName(const string& name) { name_ = name; }
 	void SetId(int id) { id_ = id; }
-	void SetEmail(const std::string& email) { email_ = email; }
+	void SetEmail(const string& email) { email_ = email; }
 	void AddPhoneNumber(PhoneNumberMessage* phonenumber) { 
 		phonenumbers_.push_back(phonenumber); 
 	}
 	void Dump();
 
 private:
-	std::string name_;
+	string name_;
 	int id_;
-	std::string email_;
-	typedef std::vector<PhoneNumberMessage*> PhoneNumberVector;
-	PhoneNumberVector phonenumbers_;
+	string email_;
+	typedef vector<PhoneNumberMessage*> PhoneNumbersArray;
+	PhoneNumbersArray phonenumbers_;
 };
 
-class AddressBookMessage : public SMessage
+class AddressBook : public SMessage
 {
 public:
-	AddressBookMessage();
-	virtual ~AddressBookMessage();
+	AddressBook();
+	virtual ~AddressBook();
 
-	virtual std::string GetMessageName();
+	virtual string GetMessageName();
 	virtual SMessage* GetStructField(const char* name, int index);
 	virtual SMessage* SetStructField(const char* name, int index);
 
@@ -70,7 +71,7 @@ public:
 	void Dump();
 
 private:
-	typedef std::vector<PersonMessage*> PersonVector;
+	typedef vector<PersonMessage*> PersonVector;
 	PersonVector persons_;
 };
 

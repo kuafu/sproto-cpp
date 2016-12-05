@@ -41,7 +41,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	AddressBookMessage abm;
+	AddressBook abm;
 
 	PersonMessage* jack = new PersonMessage;
 	jack->SetId(100);
@@ -89,7 +89,7 @@ int main(int argc, char* argv[])
 	// SaveMsgfile("addressbook2.msg", sp.GetEncodedBuffer(), len);
 	std::cout << "Encode ok.(" << size << " bytes)" << std::endl;
 
-	AddressBookMessage abm2;
+	AddressBook abm2;
 	if (!sp.Decode(&abm2, buffer, size))
 	{
 		std::cout << "Decode fail" << std::endl;
