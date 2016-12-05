@@ -2,9 +2,9 @@
 
 #include <string>
 #include <vector>
-#include "sprotomessage.h"
+#include "SMessage.h"
 
-class PhoneNumberMessage : public SprotoMessage
+class PhoneNumberMessage : public SMessage
 {
 public:
 	PhoneNumberMessage();
@@ -14,8 +14,7 @@ public:
 	virtual bool GetIntegerField(const char* name, int index, int64_t& value);
 	virtual bool SetIntegerField(const char* name, int index, int64_t value);
 	virtual const char* GetStringField(const char* name, int index, int& len);
-	virtual bool SetStringField(const char* name, int index, 
-			const char* value, int len);
+	virtual bool SetStringField(const char* name, int index, const char* value, int len);
 
 	void SetNumber(const std::string& number) { number_ = number; }
 	void SetType(int type) { type_ = type; }
@@ -26,7 +25,7 @@ private:
 	int type_;
 };
 
-class PersonMessage : public SprotoMessage
+class PersonMessage : public SMessage
 {
 public:
 	PersonMessage();
@@ -38,8 +37,8 @@ public:
 	virtual const char* GetStringField(const char* name, int index, int& len);
 	virtual bool SetStringField(const char* name, int index, 
 			const char* value, int len);
-	virtual SprotoMessage* GetStructField(const char* name, int index);
-	virtual SprotoMessage* SetStructField(const char* name, int index);
+	virtual SMessage* GetStructField(const char* name, int index);
+	virtual SMessage* SetStructField(const char* name, int index);
 
 	void SetName(const std::string& name) { name_ = name; }
 	void SetId(int id) { id_ = id; }
@@ -57,15 +56,15 @@ private:
 	PhoneNumberVector phonenumbers_;
 };
 
-class AddressBookMessage : public SprotoMessage
+class AddressBookMessage : public SMessage
 {
 public:
 	AddressBookMessage();
 	virtual ~AddressBookMessage();
 
 	virtual std::string GetMessageName();
-	virtual SprotoMessage* GetStructField(const char* name, int index);
-	virtual SprotoMessage* SetStructField(const char* name, int index);
+	virtual SMessage* GetStructField(const char* name, int index);
+	virtual SMessage* SetStructField(const char* name, int index);
 
 	void AddPerson(PersonMessage* person) { persons_.push_back(person); }
 	void Dump();

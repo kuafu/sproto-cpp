@@ -2,21 +2,21 @@
 #include "common.h"
 
 struct sproto;
-class SprotoMessage;
+class SMessage;
+
 class DLLEXPORT CppSproto
 {
 public:
 	CppSproto();
 	~CppSproto();
 
-	bool Init(const char* pbfiles);
 	bool Init(const char* proto_bin, size_t pbsize);
-	bool Encode(SprotoMessage* msg, char* encbuf, int& size);
-	bool Decode(SprotoMessage* msg, const char* decbuf, int size);
+	bool Encode(SMessage* msg, char* encbuf, int& size);
+	bool Decode(SMessage* msg, const char* decbuf, int size);
 	int Pack(const char* src, int src_size, char* dest, int dest_size);
 	int Unpack(const char* src, int src_size, char* dest, int dest_size);
 
 private:
-	sproto* sp_;
+	sproto* spro;
 };
 

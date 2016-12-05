@@ -14,9 +14,9 @@ project(cppsproto)
 set(LIB_SRC 
 	sproto.c 
 	cppsproto.cpp 
-	sprotomessage.cpp
+	SMessage.cpp
 	cppsproto.h 
-	sprotomessage.h
+	SMessage.h
 )
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -O2")

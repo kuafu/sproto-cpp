@@ -65,6 +65,8 @@ int main(int argc, char* argv[])
 	std::cout << "abm1 dump:" << std::endl;
 	abm.Dump();
 
+	//////////////////////////////////////////////////////////////////////////
+
 	static char buffer[1024];
 	int size = sizeof(buffer);
 	CppSproto sp;
@@ -98,5 +100,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "abm2 dump:" << std::endl;
 	abm2.Dump();
+
+	system("PAUSE");
 }
 

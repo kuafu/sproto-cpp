@@ -32,8 +32,7 @@ bool PhoneNumberMessage::GetIntegerField(const char* name, int index,
 	}
 }
 
-bool PhoneNumberMessage::SetIntegerField(const char* name, int index, 
-		int64_t value)
+bool PhoneNumberMessage::SetIntegerField(const char* name, int index, int64_t value)
 {
 	if (strcmp(name, "type") == 0)
 	{
@@ -67,8 +66,7 @@ const char* PhoneNumberMessage::GetStringField(const char* name, int index, int&
 	}
 }
 
-bool PhoneNumberMessage::SetStringField(const char* name, int index, 
-	const char* value, int len)
+bool PhoneNumberMessage::SetStringField(const char* name, int index, const char* value, int len)
 {
 	if (strcmp(name, "number") == 0)
 	{
@@ -182,8 +180,7 @@ const char* PersonMessage::GetStringField(const char* name, int index, int& len)
 	}
 }
 
-bool PersonMessage::SetStringField(const char* name, int index, 
-	const char* value, int len)
+bool PersonMessage::SetStringField(const char* name, int index, const char* value, int len)
 {
 	if (strcmp(name, "name") == 0)
 	{
@@ -201,8 +198,7 @@ bool PersonMessage::SetStringField(const char* name, int index,
 	}
 }
 
-SprotoMessage* PersonMessage::GetStructField(const char* name, 
-		int index)
+SMessage* PersonMessage::GetStructField(const char* name, int index)
 {
 	if (strcmp(name, "phones") == 0)
 	{
@@ -213,8 +209,7 @@ SprotoMessage* PersonMessage::GetStructField(const char* name,
 	return NULL;
 }
 
-SprotoMessage* PersonMessage::SetStructField(const char* name, 
-		int index)
+SMessage* PersonMessage::SetStructField(const char* name, int index)
 {
 	if (strcmp(name, "phones") == 0)
 	{
@@ -247,8 +242,7 @@ AddressBookMessage::AddressBookMessage()
 
 AddressBookMessage::~AddressBookMessage()
 {
-	for (PersonVector::iterator it = persons_.begin();
-			it != persons_.end(); ++it)
+	for (PersonVector::iterator it = persons_.begin(); it != persons_.end(); ++it)
 	{
 		PersonMessage* person = *it;
 		delete person;
@@ -261,7 +255,7 @@ std::string AddressBookMessage::GetMessageName()
 	return AddressBookMessageName;
 }
 
-SprotoMessage* AddressBookMessage::GetStructField(const char* name, 
+SMessage* AddressBookMessage::GetStructField(const char* name,
 		int index)
 {
 	if (strcmp(name, "persons") == 0) 
@@ -273,7 +267,7 @@ SprotoMessage* AddressBookMessage::GetStructField(const char* name,
 	return NULL;
 }
 
-SprotoMessage* AddressBookMessage::SetStructField(const char* name, 
+SMessage* AddressBookMessage::SetStructField(const char* name,
 		int index)
 {
 	if (strcmp(name, "persons") == 0)

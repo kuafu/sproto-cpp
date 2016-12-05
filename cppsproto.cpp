@@ -3,93 +3,93 @@
 extern "C" {
 #include "sproto.h"
 }
-#include "sprotomessage.h"
+#include "SMessage.h"
 #include "cppsproto.h"
 
 #define MAX_DEEPLEVEL			64	
 
 struct EncodeParam
 {
-	SprotoMessage* msg;
+	SMessage* msg;
 	int deeplevel;
 };
 
 struct DecodeParam
 {
-	SprotoMessage* msg;
+	SMessage* msg;
 	int deeplevel;
 };
 
-static int EncodeCallback(void *ud, const char *tagname, int type, 
-		int index, struct sproto_type *st, void *value, int length)
+static int EncodeCallback(void *ud, const char *tagname, int type,
+	int index, struct sproto_type *st, void *value, int length)
 {
 	EncodeParam* ep = (EncodeParam*)ud;
 
-	if (ep->deeplevel > MAX_DEEPLEVEL)
+	if(ep->deeplevel > MAX_DEEPLEVEL)
 		throw std::runtime_error("max deep level");
 
-	if (index > 0)
+	if(index > 0)
 		index -= 1;
 	else
 		index = -1;
 
-	switch (type)
+	switch(type)
 	{
 	case SPROTO_TINTEGER:
-		{
-			int64_t field_value = 0;
-			if (!ep->msg->GetIntegerField(tagname, index, field_value))
-				return 0;
+	{
+		int64_t field_value = 0;
+		if(!ep->msg->GetIntegerField(tagname, index, field_value))
+			return 0;
 
-			if (field_value > INT32_MAX || field_value < INT32_MIN)
-			{
-				*(int64_t*)value = field_value;
-				return 8;
-			}
-			else
-			{
-				*(int32_t*)value = field_value;
-				return 4;
-			}
+		if(field_value > INT32_MAX || field_value < INT32_MIN)
+		{
+			*(int64_t*)value = field_value;
+			return 8;
 		}
-		break;
-	case SPROTO_TBOOLEAN:
+		else
 		{
-			bool field_value = false;
-			if (!ep->msg->GetBooleanField(tagname, index, field_value))
-				return 0;
-
-			*(int32_t*)value = field_value?1:0;
+			*(int32_t*)value = field_value;
 			return 4;
 		}
-		break;
+	}
+	break;
+	case SPROTO_TBOOLEAN:
+	{
+		bool field_value = false;
+		if(!ep->msg->GetBooleanField(tagname, index, field_value))
+			return 0;
+
+		*(int32_t*)value = field_value ? 1 : 0;
+		return 4;
+	}
+	break;
 	case SPROTO_TSTRING:
-		{
-			int field_length = 0;
-			const char* field_value = ep->msg->GetStringField(tagname, index, 
-					field_length);
-			if (field_value == NULL)
-				return 0;
+	{
+		int field_length = 0;
+		const char* field_value = ep->msg->GetStringField(tagname, index,
+			field_length);
+		if(field_value == NULL)
+			return 0;
 
-			if (field_length > length)
-				return -1;
+		if(field_length > length)
+			return -1;
 
-			memcpy(value, field_value, field_length);
-			return field_length;
-		}
-		break;
+		memcpy(value, field_value, field_length);
+		return field_length;
+	}
+	break;
 	case SPROTO_TSTRUCT:
-		{
-			SprotoMessage* submsg = ep->msg->GetStructField(tagname, index);
-			if (submsg == NULL)
-				return 0;
+	{
+		SMessage* submsg = ep->msg->GetStructField(tagname, index);
+		if(submsg == NULL)
+			return 0;
 
-			EncodeParam subep;
-			subep.msg = submsg;
-			subep.deeplevel = ep->deeplevel + 1;
-			return sproto_encode(st, value, length, EncodeCallback, &subep);
-		}
-		break;
+		EncodeParam subep;
+		subep.msg = submsg;
+		subep.deeplevel = ep->deeplevel + 1;
+		return sproto_encode(st, value, length, EncodeCallback, &subep);
+	}
+	break;
 	default:
 		throw std::runtime_error("error tag type");
 		break;
@@ -98,56 +98,56 @@ static int EncodeCallback(void *ud, const char *tagname, int type,
 	return 0;
 }
 
-static int DecodeCallback(void *ud, const char *tagname, int type, 
-		int index, struct sproto_type *st, void *value, int length)
+static int DecodeCallback(void *ud, const char *tagname, int type,
+	int index, struct sproto_type *st, void *value, int length)
 {
 	DecodeParam* dp = (DecodeParam*)ud;
-	if (dp->deeplevel > MAX_DEEPLEVEL)
+	if(dp->deeplevel > MAX_DEEPLEVEL)
 		throw std::runtime_error("max deep level");
 
-	if (index > 0)
+	if(index > 0)
 		index -= 1;
 	else
 		index = -1;
 
-	switch (type)
+	switch(type)
 	{
 	case SPROTO_TINTEGER:
-		{
-			int64_t real_value = 0;
-			if (length == 4)
-				real_value = *(int32_t*)value;
-			else if (length == 8)
-				real_value = *(int64_t*)value;
+	{
+		int64_t real_value = 0;
+		if(length == 4)
+			real_value = *(int32_t*)value;
+		else if(length == 8)
+			real_value = *(int64_t*)value;
 
-			dp->msg->SetIntegerField(tagname, index, real_value);
-		}
-		break;
+		dp->msg->SetIntegerField(tagname, index, real_value);
+	}
+	break;
 	case SPROTO_TBOOLEAN:
-		{
-			int32_t real_value = *(int32_t*)value;
-			dp->msg->SetBooleanField(tagname, index, real_value==1);
-		}
-		break;
+	{
+		int32_t real_value = *(int32_t*)value;
+		dp->msg->SetBooleanField(tagname, index, real_value == 1);
+	}
+	break;
 	case SPROTO_TSTRING:
-		{
-			dp->msg->SetStringField(tagname, index, (char*)value, length);
-		}
-		break;
+	{
+		dp->msg->SetStringField(tagname, index, (char*)value, length);
+	}
+	break;
 	case SPROTO_TSTRUCT:
-		{
-			SprotoMessage* submsg = dp->msg->SetStructField(tagname, index);
-			if (submsg == NULL)
-				return 0;
+	{
+		SMessage* submsg = dp->msg->SetStructField(tagname, index);
+		if(submsg == NULL)
+			return 0;
 
-			DecodeParam subdp;
-			subdp.msg = submsg;
-			subdp.deeplevel = dp->deeplevel + 1;
-			int ret = sproto_decode(st, value, length, DecodeCallback, &subdp);
-			if (ret < 0 || ret != length)
-				return ret;
-		}
-		break;
+		DecodeParam subdp;
+		subdp.msg = submsg;
+		subdp.deeplevel = dp->deeplevel + 1;
+		int ret = sproto_decode(st, value, length, DecodeCallback, &subdp);
+		if(ret < 0 || ret != length)
+			return ret;
+	}
+	break;
 	default:
 		throw std::runtime_error("error tag type");
 		break;
@@ -157,38 +157,32 @@ static int DecodeCallback(void *ud, const char *tagname, int type,
 }
 
 CppSproto::CppSproto()
-	: sp_(NULL)
+	: spro(NULL)
 {
 }
 
 CppSproto::~CppSproto()
 {
-	if(sp_)
+	if(spro)
 	{
-		sproto_release(sp_);
-		sp_ = NULL;
+		sproto_release(spro);
+		spro = NULL;
 	}
-}
-
-bool CppSproto::Init(const char* pbfiles)
-{
-	// TODO
-	return false;
 }
 
 bool CppSproto::Init(const char* proto_bin, size_t pbsize)
 {
-	sp_ = sproto_create(proto_bin, pbsize);
-	if (sp_ == NULL)
+	spro = sproto_create(proto_bin, pbsize);
+	if(spro == NULL)
 		return false;
 
 	return true;
 }
 
-bool CppSproto::Encode(SprotoMessage* msg, char* encbuf, int& size)
+bool CppSproto::Encode(SMessage* msg, char* encbuf, int& size)
 {
-	struct sproto_type* st = sproto_type(sp_, msg->GetMessageName().c_str());
-	if (st == NULL)
+	struct sproto_type* st = sproto_type(spro, msg->GetMessageName().c_str());
+	if(st == NULL)
 		return false;
 
 	try
@@ -198,7 +192,7 @@ bool CppSproto::Encode(SprotoMessage* msg, char* encbuf, int& size)
 		ep.deeplevel = 0;
 
 		int ret = sproto_encode(st, encbuf, size, EncodeCallback, &ep);
-		if (ret == -1)
+		if(ret == -1)
 		{
 			size = -1;
 			return false;
@@ -209,22 +203,22 @@ bool CppSproto::Encode(SprotoMessage* msg, char* encbuf, int& size)
 			return true;
 		}
 	}
-	catch (std::runtime_error e)
+	catch(std::runtime_error e)
 	{
 		// TODO
 		e.what();
 		return false;
 	}
-	catch (...)
+	catch(...)
 	{
 		return false;
 	}
 }
 
-bool CppSproto::Decode(SprotoMessage* msg, const char* decbuf, int size)
+bool CppSproto::Decode(SMessage* msg, const char* decbuf, int size)
 {
-	struct sproto_type* st = sproto_type(sp_, msg->GetMessageName().c_str());
-	if (st == NULL)
+	struct sproto_type* st = sproto_type(spro, msg->GetMessageName().c_str());
+	if(st == NULL)
 		return false;
 
 	DecodeParam dp;
@@ -235,13 +229,13 @@ bool CppSproto::Decode(SprotoMessage* msg, const char* decbuf, int size)
 		int ret = sproto_decode(st, decbuf, (int)size, DecodeCallback, &dp);
 		return (ret >= 0);
 	}
-	catch (std::runtime_error e)
+	catch(std::runtime_error e)
 	{
 		// TODO
 		e.what();
 		return false;
 	}
-	catch (...)
+	catch(...)
 	{
 		return false;
 	}
@@ -249,7 +243,7 @@ bool CppSproto::Decode(SprotoMessage* msg, const char* decbuf, int size)
 
 int CppSproto::Pack(const char* src, int src_size, char* dest, int dest_size)
 {
-	if (dest == NULL)
+	if(dest == NULL)
 	{
 		// from lsproto.c
 		// the worst-case space overhead of packing is 2 bytes per 2 KiB of input (256 words = 2KiB).

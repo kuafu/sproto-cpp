@@ -4,10 +4,10 @@
 #include <string>
 #include "common.h"
 
-class DLLEXPORT SprotoMessage
+class DLLEXPORT SMessage
 {
 public:
-	virtual ~SprotoMessage() {}
+	virtual ~SMessage() {}
 
 	virtual std::string GetMessageName() = 0;
 	virtual bool GetIntegerField(const char* name, int index, int64_t& value);
@@ -15,9 +15,8 @@ public:
 	virtual bool GetBooleanField(const char* name, int index, bool& value);
 	virtual bool SetBooleanField(const char* name, int index, bool value);
 	virtual const char* GetStringField(const char* name, int index, int& len);
-	virtual bool SetStringField(const char* name, int index, const char* value,
-			int len);
-	virtual SprotoMessage* GetStructField(const char* name, int index);
-	virtual SprotoMessage* SetStructField(const char* name, int index);
+	virtual bool SetStringField(const char* name, int index, const char* value, int len);
+	virtual SMessage* GetStructField(const char* name, int index);
+	virtual SMessage* SetStructField(const char* name, int index);
 };
 
