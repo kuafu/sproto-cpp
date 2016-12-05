@@ -3,9 +3,10 @@ cmake_minimum_required(VERSION 2.8)
 project(sproto)
 include_directories(D:/SDK/lua5.2/src)
 link_directories(D:/SDK/lua5.2/build/Debug)
+
 set(LIB_SRC sproto.c lsproto.c)
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g -O2")
-set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 add_library(sproto SHARED ${LIB_SRC})
 target_link_libraries(sproto lua.lib)
 
