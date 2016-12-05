@@ -4,7 +4,7 @@ package.path = "./?.lua;lualib/?.lua;examples/?.lua;common/?.lua;"
 local parser = require "sprotoparser"
 
 --local spfile = arg[1]
-file = io.open("./addressbook.sp", "r")
+file = io.open("./addressbook.sproto", "r")
 print("-->", file)
 scheme = file:read "*a"
 file:close()

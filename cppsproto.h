@@ -16,6 +16,7 @@ public:
 	int Pack(const char* src, int src_size, char* dest, int dest_size);
 	int Unpack(const char* src, int src_size, char* dest, int dest_size);
 
+	void Dump();
 private:
 	sproto* spro;
 };

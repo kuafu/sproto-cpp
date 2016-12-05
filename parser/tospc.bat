@@ -1,1 +1,1 @@
-lua spc.lua addressnotemessage.sp addressnotemessage.pb
+lua spc.lua addressbook.sproto addressbook.pb

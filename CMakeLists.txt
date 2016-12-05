@@ -20,10 +20,10 @@ set(LIB_SRC
 )
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -g -O2")
-set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/lib)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 add_library(cppsproto SHARED ${LIB_SRC})
 
-project(demo)
+project(test)
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 set(EXE_SRC demo.cpp addressbookmessage.cpp)
 #set(CMAKE_CXX_FLAGS "-Wall -g -O2")

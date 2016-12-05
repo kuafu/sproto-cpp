@@ -261,3 +261,9 @@ int CppSproto::Unpack(const char* src, int src_size, char* dest, int dest_size)
 	return sproto_unpack(src, src_size, dest, dest_size);
 }
 
+void CppSproto::Dump()
+{
+	sproto_dump(spro);
+
+}
+

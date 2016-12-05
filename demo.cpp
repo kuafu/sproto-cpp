@@ -67,8 +67,6 @@ int main(int argc, char* argv[])
 
 	//////////////////////////////////////////////////////////////////////////
 
-	static char buffer[1024];
-	int size = sizeof(buffer);
 	CppSproto sp;
 	if (!sp.Init(pb.data(), pb.length()))
 	{
@@ -76,6 +74,12 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
+	cout << "start dump sproto" << endl;
+	sp.Dump();
+	cout << "end dump sproto" << endl;
+
+	static char buffer[1024];
+	int size = sizeof(buffer);
 	if (!sp.Encode(&abm, buffer, size))
 	{
 		std::cout << "Encode fail" << std::endl;
@@ -86,7 +90,17 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 
-	// SaveMsgfile("addressbook2.msg", sp.GetEncodedBuffer(), len);
+	for(int i = 0; i < size; i++)
+	{
+		printf("%02X ", buffer[i]);
+		if(i % 16 == 15)
+		{
+			printf("\n");
+		}
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	SaveMsgfile("Encode.dat", buffer, size);
 	std::cout << "Encode ok.(" << size << " bytes)" << std::endl;
 
 	AddressBook abm2;
