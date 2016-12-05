@@ -1,7 +1,6 @@
 package.cpath = "./?.so"
 package.path = "./?.lua;lualib/?.lua;examples/?.lua;common/?.lua;"
 
-local parser = require "sprotoparser"
 
 --local spfile = arg[1]
 file = io.open("./addressbook.sproto", "r")
@@ -11,10 +10,11 @@ file:close()
 file = nil
 
 
+local parser = require "sprotoparser"
 local bin = parser.parse(scheme)
 
 --local pbfile = arg[2]
-file = io.open("addressbook.pb", "ab")
+file = io.open("addressbook.pb", "w")
 file:write(bin)
 file:close()
 

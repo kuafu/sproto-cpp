@@ -37,6 +37,8 @@ else
 	end
 end
 
+print("packbytes:", packbytes)
+
 local P = lpeg.P
 local S = lpeg.S
 local R = lpeg.R
