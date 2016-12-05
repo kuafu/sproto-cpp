@@ -18,6 +18,6 @@ public:
 
 	void Dump();
 private:
-	sproto* spro;
+	sproto* proto;
 };
 

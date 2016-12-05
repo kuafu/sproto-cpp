@@ -20,7 +20,7 @@ struct DecodeParam
 	int deeplevel;
 };
 
-static int EncodeCallback(void *ud, const char *tagname, int type,
+extern "C" int EncodeCallback(void *ud, const char *tagname, int type,
 	int index, struct sproto_type *st, void *value, int length)
 {
 	EncodeParam* ep = (EncodeParam*)ud;
@@ -157,23 +157,23 @@ static int DecodeCallback(void *ud, const char *tagname, int type,
 }
 
 CppSproto::CppSproto()
-	: spro(NULL)
+	: proto(NULL)
 {
 }
 
 CppSproto::~CppSproto()
 {
-	if(spro)
+	if(proto)
 	{
-		sproto_release(spro);
-		spro = NULL;
+		sproto_release(proto);
+		proto = NULL;
 	}
 }
 
 bool CppSproto::Init(const char* proto_bin, size_t pbsize)
 {
-	spro = sproto_create(proto_bin, pbsize);
-	if(spro == NULL)
+	proto = sproto_create(proto_bin, pbsize);
+	if(proto == NULL)
 		return false;
 
 	return true;
@@ -181,8 +181,8 @@ bool CppSproto::Init(const char* proto_bin, size_t pbsize)
 
 bool CppSproto::Encode(SMessage* msg, char* encbuf, int& size)
 {
-	struct sproto_type* st = sproto_type(spro, msg->GetMessageName().c_str());
-	if(st == NULL)
+	struct sproto_type* p_type = sproto_type(proto, msg->GetMessageName().c_str());
+	if(p_type == NULL)
 		return false;
 
 	try
@@ -191,7 +191,7 @@ bool CppSproto::Encode(SMessage* msg, char* encbuf, int& size)
 		ep.msg = msg;
 		ep.deeplevel = 0;
 
-		int ret = sproto_encode(st, encbuf, size, EncodeCallback, &ep);
+		int ret = sproto_encode(p_type, encbuf, size, EncodeCallback, &ep);
 		if(ret == -1)
 		{
 			size = -1;
@@ -217,7 +217,7 @@ bool CppSproto::Encode(SMessage* msg, char* encbuf, int& size)
 
 bool CppSproto::Decode(SMessage* msg, const char* decbuf, int size)
 {
-	struct sproto_type* st = sproto_type(spro, msg->GetMessageName().c_str());
+	struct sproto_type* st = sproto_type(proto, msg->GetMessageName().c_str());
 	if(st == NULL)
 		return false;
 
@@ -263,7 +263,7 @@ int CppSproto::Unpack(const char* src, int src_size, char* dest, int dest_size)
 
 void CppSproto::Dump()
 {
-	sproto_dump(spro);
+	sproto_dump(proto);
 
 }
 
