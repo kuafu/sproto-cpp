@@ -343,7 +343,7 @@ static const luaL_Reg bitlib[] = {
 };
 
 
-
+__declspec(dllexport)
 int luaopen_bit32 (lua_State *L) {
   luaL_register(L, "bit32", bitlib);
   return 1;
