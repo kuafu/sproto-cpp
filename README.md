@@ -8,3 +8,11 @@ Use spc.sh to generate pb file.
 ```
 spc.sh addressnotemessage.sp addressnotemessage.pb
 ```
+
+
+Usage
+----------------------------
+ - cmake & build
+ - cd debug
+ - lua spc.lua
+ - debug demo

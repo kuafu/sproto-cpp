@@ -1,2 +1,8 @@
 build/
-Debug/
+*.exp
+*.ilk
+*.pdb
+*.dat
+*.lib
+*.exe
+*.dll
