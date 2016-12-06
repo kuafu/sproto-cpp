@@ -36,4 +36,9 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 add_executable(demo ${EXE_SRC})
 target_link_libraries(demo cppsproto)
 
+
+add_library(bit32 SHARED lbitlib.c )
+target_link_libraries(bit32 liblua)
+
+
 add_subdirectory(lua5.2)
