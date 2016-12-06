@@ -135,8 +135,8 @@ if ( LUA_BUILD_AS_DLL )
 endif ()
 
 
-# add_executable ( lua ${SRC_LUA} src/lua.rc )
-# target_link_libraries ( lua liblua )
+add_executable ( lua ${SRC_LUA} src/lua.rc )
+target_link_libraries ( lua liblua )
 
 # add_executable ( luac ${SRC_CORE} ${SRC_LIB} ${SRC_LUAC} src/luac.rc )
 # target_link_libraries ( luac ${LIBS} )
