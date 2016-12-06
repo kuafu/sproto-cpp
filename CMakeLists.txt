@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
 project(sproto)
-include_directories(D:/SDK/lua5.2/src)
-link_directories(D:/SDK/lua5.2/build/Debug)
+include_directories(lua5.2/src)
+link_directories(${CMAKE_SOURCE_DIR})
 
 set(LIB_SRC 
 	sproto.c
@@ -35,3 +35,5 @@ set(EXE_SRC demo.cpp addressbookmessage.cpp)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
 add_executable(demo ${EXE_SRC})
 target_link_libraries(demo cppsproto)
+
+add_subdirectory(lua5.2)
