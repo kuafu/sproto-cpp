@@ -11,8 +11,8 @@ set(LIB_SRC
 )
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g -O2")
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
-add_library(sproto SHARED ${LIB_SRC})
-target_link_libraries(sproto lua.lib)
+#add_library(sproto SHARED ${LIB_SRC})
+#target_link_libraries(sproto lua.lib)
 
 project(cppsproto)
 set(LIB_SRC 
