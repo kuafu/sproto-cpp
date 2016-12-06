@@ -42,3 +42,6 @@ target_link_libraries(bit32 liblua)
 
 
 add_subdirectory(lua5.2)
+
+add_subdirectory(lpeg)
+#target_link_libraries(lpeg liblua)
