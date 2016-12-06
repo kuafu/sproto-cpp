@@ -12,7 +12,7 @@ spc.sh addressnotemessage.sp addressnotemessage.pb
 
 Usage
 ----------------------------
- - cmake & build
- - cd debug
- - lua spc.lua
- - debug demo
+ - cmake & build	(Generate lua.exe\lpeg\bit32)
+ - cd debug		
+ - lua spc.lua  	(Generate sproto binary)
+ - debug demo		(Need set workdir to debug)
