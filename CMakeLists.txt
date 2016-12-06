@@ -5,9 +5,9 @@ include_directories(lua5.2/src)
 link_directories(${CMAKE_SOURCE_DIR})
 
 set(LIB_SRC 
-	sproto.c
-	sproto.h
-	lsproto.c
+	sproto/sproto.c
+	sproto/sproto.h
+	sproto/lsproto.c
 )
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -g -O2")
 set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR})
@@ -16,8 +16,8 @@ target_link_libraries(sproto lua.lib)
 
 project(cppsproto)
 set(LIB_SRC 
-	sproto.c
-	sproto.h	
+	sproto/sproto.c
+	sproto/sproto.h	
 	cppsproto.cpp 
 	SMessage.cpp
 	cppsproto.h 

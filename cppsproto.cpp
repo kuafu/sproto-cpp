@@ -1,7 +1,7 @@
 #include <string.h>
 #include <stdexcept>
 extern "C" {
-#include "sproto.h"
+#include "sproto/sproto.h"
 }
 #include "SMessage.h"
 #include "cppsproto.h"

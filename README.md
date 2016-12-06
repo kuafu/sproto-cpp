@@ -16,3 +16,8 @@ Usage
  - cd debug		
  - lua spc.lua  	(Generate sproto binary)
  - debug demo		(Need set workdir to debug)
+ 
+ 
+sproto is not used, so do lsproto.c
+
+ 
