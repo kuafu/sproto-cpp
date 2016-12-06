@@ -6,20 +6,15 @@
 
 #include "sproto.h"
 
-int EncodeCallback(void *ud, const char *tagname, int type,
-	int index, struct sproto_type *st, void *value, int length);
+//int EncodeCallback(void *ud, const char *tagname, int type,
+//	int index, struct sproto_type *st, void *value, int length);
 
 
-#define SPROTO_TARRAY 0x80	//10000000b, 128, ��һ���ֽڵ����λ��ʶ����
+#define SPROTO_TARRAY 0x80	//10000000b, 128, 用一个字节的最高位标识数组
 #define CHUNK_SIZE 1000
 #define SIZEOF_LENGTH 4
 #define SIZEOF_HEADER 2
 #define SIZEOF_FIELD 2
-
-//#define SPROTO_TINTEGER 0
-//#define SPROTO_TBOOLEAN 1
-//#define SPROTO_TSTRING 2
-//#define SPROTO_TSTRUCT 3
 
 struct field {
 	int tag;
@@ -700,7 +695,7 @@ encode_string(sproto_callback cb, void *ud, struct field *f, uint8_t *data, int 
 	if(size < SIZEOF_LENGTH)
 		return -1;
 
-	assert(cb == EncodeCallback);
+// 	assert(cb == EncodeCallback);
 
 	int sz = cb(ud, f->name, SPROTO_TSTRING, 0, NULL, data + SIZEOF_LENGTH, size - SIZEOF_LENGTH);
 	return fill_size(data, sz);
@@ -711,7 +706,7 @@ encode_struct(sproto_callback cb, void *ud, struct field *f, uint8_t *data, int 
 	if(size < SIZEOF_LENGTH)
 		return -1;
 
-	assert(cb == EncodeCallback);
+// 	assert(cb == EncodeCallback);
 
 	int sz = cb(ud, f->name, SPROTO_TSTRUCT, 0, f->st, data + SIZEOF_LENGTH, size - SIZEOF_LENGTH);
 	return fill_size(data, sz);
@@ -818,7 +813,7 @@ encode_integer_array(sproto_callback cb, void *ud, struct field *f, uint8_t *buf
 
 static int encode_array(sproto_callback cb, void *ud, struct field *f, uint8_t *data, int size)
 {
-	assert(cb == EncodeCallback);
+// 	assert(cb == EncodeCallback);
 
 	if(size < SIZEOF_LENGTH)
 		return -1;
@@ -876,7 +871,7 @@ static int encode_array(sproto_callback cb, void *ud, struct field *f, uint8_t *
 
 int sproto_encode(struct sproto_type *p_type, void * buffer, int size, sproto_callback cb, void *ud)
 {
-	assert(cb == EncodeCallback);
+// 	assert(cb == EncodeCallback);
 
 	uint8_t * header = buffer;
 	uint8_t * data;
@@ -894,7 +889,7 @@ int sproto_encode(struct sproto_type *p_type, void * buffer, int size, sproto_ca
 		int value = 0;
 		int sz = -1;
 
-		//һ���ֽڵ����λ��ʾ����
+		//一个字节的最高位表示数组
 		if(fld->type & SPROTO_TARRAY)
 		{
 			sz = encode_array(cb, ud, fld, data, size);
